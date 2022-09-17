@@ -203,6 +203,6 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-catkin_install_python(PROGRAMS src/espeak.py src/mbrola.py src/pico.py src/nix.py
+catkin_install_python(PROGRAMS src/espeak.py src/mbrola.py src/pico.py src/nix.py src/ed_tts.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
