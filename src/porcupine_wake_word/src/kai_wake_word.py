@@ -19,7 +19,7 @@ from datetime import datetime
 from threading import Thread
 import rospy
 from std_msgs.msg import String, Bool
-
+import time
 
 class PorcupineDemo(Thread):
     """
@@ -119,6 +119,7 @@ class PorcupineDemo(Thread):
                         wake_str = "session_on"
                         rospy.loginfo(wake_str)
                         pub.publish(wake_str)
+                        time.sleep(2)
                         session_pub.publish(True)
                         
 
