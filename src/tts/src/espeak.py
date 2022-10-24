@@ -30,10 +30,14 @@ class tts_engine():
         self.mySpeaker.pitch = 500
         self.mySpeaker.wpm = 150
         self.voice = 'en'
+        start_time = time.time()
         self.mySpeaker.say(phrase)
         if self.mySpeaker.is_talking:
             self.pubStatus.publish(False)
         self.mySpeaker.wait()
+        end_time = time.time()
+        time_dif = end_time - start_time
+        print(time_dif)
         time.sleep(0.3)
         if phrase.lower() == "speak to you soon":
             self.pubStatus.publish(False)

@@ -44,6 +44,7 @@ class tts_engine():
         
         rospy.loginfo("The robot says: " + phrase)
         self.pubStatus.publish(False)
+        start_time = time.time()
         wav = voice.to_audio(phrase)
         with open("response.wav", "wb") as wavfile:
             wavfile.write(wav)
@@ -56,6 +57,9 @@ class tts_engine():
         while len(data):
             stream.write(data)
             data = wf.readframes(CHUNK)
+        end_time = time.time()
+        time_dif = end_time - start_time
+        print(time_dif)
         #while not voxpopuli.main.AudioPlayer.play:
         #    time.sleep(0.3)
         if phrase.lower() == "speak to you soon":

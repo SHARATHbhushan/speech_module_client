@@ -27,3 +27,10 @@ and in another terminal `rostopic pub -1 /session_key std_msgd/String "data:on"`
 - run voice recognition nodde
 
 - `rosrun vosk_ros vosk_node.py `
+
+
+# to run RASA : 
+
+- in speech module go to cogbot_chatbot and start the server using `rasa run -m models --endpoints endpoints.yml --port 5002 --credentials credentials.yml --enable-api`
+
+- make sure rasa is already installed and init is completed in cogbot_chatbot

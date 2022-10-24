@@ -1,5 +1,7 @@
 import asyncio
+import email
 import tempfile
+from tracemalloc import start
 import soundfile
 from playsound import playsound
 import wave
@@ -10,7 +12,7 @@ import soundfile as sf
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Bool
-
+import time
 p = pyaudio.PyAudio()
 CHUNK = 1024
 class tts_engine():
@@ -31,6 +33,7 @@ class tts_engine():
 
         communicate = edge_tts.Communicate()
         ask = phrase
+        start_time = time.time()
         with open('response.wav', 'wb') as temporary_file:
             async for i in communicate.run(ask, voice="Microsoft Server Speech Text to Speech Voice (en-US, GuyNeural)"):
                 if i[2] is not None:
@@ -43,6 +46,7 @@ class tts_engine():
 
             # Now try to open the file with wave
             wf = wave.open("tmp.wav", 'rb')
+            
             stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
                     channels=wf.getnchannels(),
                     rate=wf.getframerate(),
@@ -51,6 +55,10 @@ class tts_engine():
             while len(data):
                 stream.write(data)
                 data = wf.readframes(CHUNK)
+            end_time = time.time()
+            time_dif = end_time - start_time 
+            print(time_dif)
+
             '''
             with open("response.raw", "rb") as inp_f:
                 data = inp_f.read()

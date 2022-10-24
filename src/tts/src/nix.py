@@ -223,8 +223,8 @@ class tts_engine():
         rospy.loginfo("The robot says: " + phrase)
         self.pubStatus.publish(False)
         #wav = voice.to_audio(phrase)  
-
-        nix = NixTTSInference(model_dir = "/home/acefly/speech_module_client/src/tts/src/nix-ljspeech-stochastic-v0.1")
+        
+        nix = NixTTSInference(model_dir = "/home/acefly/nix-tts/nix-ljspeech-stochastic-v0.1")
         # Tokenize input text
         c, c_length, phoneme = nix.tokenize(phrase)
         # Convert text to raw speech
@@ -232,9 +232,9 @@ class tts_engine():
 
         # Listen to the generated speech
         #Audio(xw[0,0], rate = 22050)
+        start_time = time.time()
         sf.write("test.wav", xw[0,0], 22050)
         time.sleep(0.5)
-        
         wf = wave.open("test.wav", 'rb')
         stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
                 channels=wf.getnchannels(),
@@ -244,8 +244,12 @@ class tts_engine():
         while len(data):
             stream.write(data)
             data = wf.readframes(CHUNK)
+        end_time = time.time()
+        time_dif = end_time - start_time
+        print(time_dif)
         #while not voxpopuli.main.AudioPlayer.play:
         #    time.sleep(0.3)
+        time.sleep(3)
         if phrase.lower() == "speak to you soon":
             self.pubStatus.publish(False)
         else:

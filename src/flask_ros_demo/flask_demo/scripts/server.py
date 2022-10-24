@@ -11,6 +11,7 @@ from std_msgs.msg import String
 import threading
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
+import time
 #speech_input = "test "
 '''
 def get_input(data):
@@ -42,11 +43,13 @@ def chat():
     text_input = dialogflow.TextInput(text=input_text, language_code=language)
 
     query_input = dialogflow.QueryInput(text=text_input)
-
+    start_time = time.time()
     response = session_client.detect_intent(
         request={"session": session, "query_input": query_input}
     )
-    
+    end_time = time.time()
+    time_dif = end_time - start_time
+    print(time_dif)
     def proto_message_to_dict(message: proto.Message) -> dict:
         return json.loads(message.__class__.to_json(message))
     
@@ -59,7 +62,7 @@ def chat():
     else:
         response = {"message": result['queryResult']
                     ['fulfillmentText'], "payload": None}
-
+    
     return jsonify(response)
 
 
