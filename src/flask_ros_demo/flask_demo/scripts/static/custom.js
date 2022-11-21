@@ -1,7 +1,7 @@
 $(function () {
     //change the IP
     var ros = new ROSLIB.Ros({
-        url : 'ws://192.168.0.102:9090'
+        url : 'ws://192.168.0.107:9090'
     });
 
     ros.on('connection', function() {
